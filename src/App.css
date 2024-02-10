@@ -18,3 +18,29 @@ body {
   border: 10px solid #61dafb;
   height: 100%;
 }
+
+.secondContainer {
+  border: 10px solid #747bff;
+  width: 300px;
+  margin-left: auto;
+}
+
+.secondContainerTitle{
+  font-weight: bold;
+  text-align: center;
+}
+
+.secondContainerBody{
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  align-items: center;
+  height: 100%;
+}
+
+.secondDots {
+  width: 10px;
+  height: 10px;
+  background-color: #747bff;
+  margin: 5px;
+}

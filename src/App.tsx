@@ -14,10 +14,14 @@ function App() {
     second: new Date().getSeconds().toLocaleString()
   });
   const [secondDot, setSecondDot] = useState("");
+  const [secondArray, setSecondArray] = useState(['']);
   const [MinuteDot, setMinuteDot] = useState("");
   const [hourDot, setHourDot] = useState("");
+  const [htmlContent, setHtmlContent] = useState(null as any);
 
-
+  useEffect(() => {
+    setHtmlContent(html());
+  }, []); // 空の依存配列を渡すことで、コンポーネントの初回レンダリング時にのみ実行されるようにする
 
 
 
@@ -52,9 +56,12 @@ function App() {
     // 60秒でリセット
     if (Number(second) === 0) {
       setSecondDot("");
+      setSecondArray(['']);
       return
     } 
+    setSecondArray(secondArray => [...secondArray, second]);
     setSecondDot(secondDot => secondDot +"s");
+    // console.log(secondArray);
     
   }
 
@@ -91,7 +98,14 @@ function App() {
     setGreetMsg(await invoke("greet", { name }));
   }
 
+  function html() {
+    return secondArray.map((item,index) => {
+      return <p className="secondDots" key={index}></p>
+    })
+  }
+  
   return (
+
     <div className="container">
       <h1>Welcome to Tauri!</h1>
       <div>
@@ -100,6 +114,12 @@ function App() {
         <p>{hourDot}</p>
         <p>{MinuteDot}</p>
         <p>{secondDot}</p>
+        <div className="secondContainer">
+          <div className="secondContainerTitle">秒</div>
+          <div className="secondContainerBody">
+            {html()} {/* 保存されたhtmlContentを表示 */}
+          </div>
+        </div>
       </div>
 
 
