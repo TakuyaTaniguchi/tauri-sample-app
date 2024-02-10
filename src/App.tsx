@@ -8,22 +8,48 @@ import "./App.css";
 function App() {
   const [greetMsg, setGreetMsg] = useState("");
   const [name, setName] = useState("");
-  const [time, setTime] = useState("");
+  const [date, setDate] = useState({
+    hour: new Date().getHours().toLocaleString(),
+    minute: new Date().getMinutes().toLocaleString(),
+    second: new Date().getSeconds().toLocaleString()
+  });
+  const [secondDot, setSecondDot] = useState("");
+
 
 
   useEffect(() => {
     // new Date().getUTCMilliseconds() に関する情報
     // https://lsd-blog.com/js-just-time/
     const interval = setInterval(() => {
-      setTime(getTime())
+      const time = getTime();
+      setDate({
+        hour: time.hour,
+        minute: time.minute,
+        second: time.second
+      })
+      mathSecond(time.second);
     },1000 - new Date().getUTCMilliseconds()); 
     return () => clearInterval(interval);
   })
 
 
-  function getTime() :string {
-    return new Date().toLocaleTimeString();
+  function getTime() {
+    const date = new Date();
+    const hour = date.getHours().toLocaleString();
+    const minute = date.getMinutes().toLocaleString();
+    const second = date.getSeconds().toLocaleString();
+    return { hour, minute, second }
   }
+
+
+  function mathSecond(second: string) {
+    if (Number(second) === 0) {
+      setSecondDot("");
+    } else {
+      setSecondDot(secondDot => secondDot +"l");
+    }
+  }
+
 
   async function greet() {
     // Learn more about Tauri commands at https://tauri.app/v1/guides/features/command
@@ -35,10 +61,13 @@ function App() {
       <h1>Welcome to Tauri!</h1>
       <div>
         <h3>時間</h3>
-        <p>日本:{time}</p>
+        <p>日本:{date.hour}:{date.minute}:{date.second}</p>
+        <p>{secondDot}</p>
       </div>
 
-      <div className="row">
+
+
+      {/* <div className="row">
         <a href="https://vitejs.dev" target="_blank">
           <img src="/vite.svg" className="logo vite" alt="Vite logo" />
         </a>
@@ -67,7 +96,7 @@ function App() {
         <button type="submit">Greet</button>
       </form>
 
-      <p>{greetMsg}</p>
+      <p>{greetMsg}</p> */}
     </div>
   );
 }
