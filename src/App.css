@@ -1,3 +1,11 @@
+body {
+  height: 100vh;
+}
+
+#root {
+  height: 100%;
+}
+
 .logo.vite:hover {
   filter: drop-shadow(0 0 2em #747bff);
 }
@@ -8,4 +16,5 @@
 
 .container {
   border: 10px solid #61dafb;
+  height: 100%;
 }
