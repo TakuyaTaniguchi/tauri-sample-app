@@ -1,11 +1,29 @@
 import { useState } from "react";
 import reactLogo from "./assets/react.svg";
 import { invoke } from "@tauri-apps/api/tauri";
+import { useEffect } from 'react';
+
 import "./App.css";
 
 function App() {
   const [greetMsg, setGreetMsg] = useState("");
   const [name, setName] = useState("");
+  const [time, setTime] = useState("");
+
+
+  useEffect(() => {
+    // new Date().getUTCMilliseconds() に関する情報
+    // https://lsd-blog.com/js-just-time/
+    const interval = setInterval(() => {
+      setTime(getTime())
+    },1000 - new Date().getUTCMilliseconds()); 
+    return () => clearInterval(interval);
+  })
+
+
+  function getTime() :string {
+    return new Date().toLocaleTimeString();
+  }
 
   async function greet() {
     // Learn more about Tauri commands at https://tauri.app/v1/guides/features/command
@@ -15,6 +33,10 @@ function App() {
   return (
     <div className="container">
       <h1>Welcome to Tauri!</h1>
+      <div>
+        <h3>時間</h3>
+        <p>日本:{time}</p>
+      </div>
 
       <div className="row">
         <a href="https://vitejs.dev" target="_blank">
