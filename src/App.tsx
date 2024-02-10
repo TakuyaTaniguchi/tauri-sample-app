@@ -14,6 +14,10 @@ function App() {
     second: new Date().getSeconds().toLocaleString()
   });
   const [secondDot, setSecondDot] = useState("");
+  const [MinuteDot, setMinuteDot] = useState("");
+  const [hourDot, setHourDot] = useState("");
+
+
 
 
 
@@ -28,6 +32,8 @@ function App() {
         second: time.second
       })
       mathSecond(time.second);
+      mathMinute(time.second,time.minute);
+      mathHour(time.second,time.minute,time.hour);
     },1000 - new Date().getUTCMilliseconds()); 
     return () => clearInterval(interval);
   })
@@ -43,10 +49,39 @@ function App() {
 
 
   function mathSecond(second: string) {
+    // 60秒でリセット
     if (Number(second) === 0) {
       setSecondDot("");
-    } else {
-      setSecondDot(secondDot => secondDot +"l");
+      return
+    } 
+    setSecondDot(secondDot => secondDot +"s");
+    
+  }
+
+  function mathMinute(second:string ,minute: string) { 
+    // 60分でリセット
+    if(Number(second) === 0 && Number(minute) === 0) {
+      setMinuteDot("");
+      return
+    }
+    if(Number(second) === 0 ) {
+
+      setMinuteDot(MinuteDot => MinuteDot +"m");
+      return
+    }
+
+  }
+
+  function mathHour(second:string ,minute: string, hour: string) {
+    // 1時間でリセット
+    if(Number(second) === 0 && Number(minute) === 0 && Number(hour) === 0) {
+      setMinuteDot("");
+      return
+    }
+
+    if(Number(second) === 0 && Number(minute) === 0 ) {
+      setHourDot(hourDot => hourDot +"h");
+      return
     }
   }
 
@@ -62,6 +97,8 @@ function App() {
       <div>
         <h3>時間</h3>
         <p>日本:{date.hour}:{date.minute}:{date.second}</p>
+        <p>{hourDot}</p>
+        <p>{MinuteDot}</p>
         <p>{secondDot}</p>
       </div>
 
