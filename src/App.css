@@ -41,6 +41,10 @@ body {
 .secondDots {
   width: 10px;
   height: 10px;
-  background-color: #747bff;
+  background-color: gray;
   margin: 5px;
+}
+
+.secondDots.active {
+  background-color: red;
 }

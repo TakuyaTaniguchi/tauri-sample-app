@@ -15,13 +15,10 @@ function App() {
   });
   const [secondDot, setSecondDot] = useState("");
   const [secondArray, setSecondArray] = useState(['']);
+  const [secondItems, setSecondItems] = useState([Array(60).fill('')]);
+
   const [MinuteDot, setMinuteDot] = useState("");
   const [hourDot, setHourDot] = useState("");
-  const [htmlContent, setHtmlContent] = useState(null as any);
-
-  useEffect(() => {
-    setHtmlContent(html());
-  }, []); // 空の依存配列を渡すことで、コンポーネントの初回レンダリング時にのみ実行されるようにする
 
 
 
@@ -61,7 +58,6 @@ function App() {
     } 
     setSecondArray(secondArray => [...secondArray, second]);
     setSecondDot(secondDot => secondDot +"s");
-    // console.log(secondArray);
     
   }
 
@@ -98,9 +94,18 @@ function App() {
     setGreetMsg(await invoke("greet", { name }));
   }
 
+
+  function dots(){
+    return
+  }
+
+  // Array.from(new Array(30).keys()).map((x) => x + 1)
+
   function html() {
-    return secondArray.map((item,index) => {
-      return <p className="secondDots" key={index}></p>
+   return Array.from(new Array(60)).map((v,i) => {
+    // 0でリセットしているのでactiveにならない
+    if(i === 0) return false
+      return <p className={'secondDots ' + (Number(secondArray[i]) === i ? 'active': '')} key={i}> </p>
     })
   }
   
@@ -117,7 +122,8 @@ function App() {
         <div className="secondContainer">
           <div className="secondContainerTitle">秒</div>
           <div className="secondContainerBody">
-            {html()} {/* 保存されたhtmlContentを表示 */}
+
+            {html()} 
           </div>
         </div>
       </div>
