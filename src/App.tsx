@@ -94,14 +94,7 @@ function App() {
     setGreetMsg(await invoke("greet", { name }));
   }
 
-
-  function dots(){
-    return
-  }
-
-  // Array.from(new Array(30).keys()).map((x) => x + 1)
-
-  function html() {
+  function seconHtml() {
    return Array.from(new Array(60)).map((v,i) => {
     // 0でリセットしているのでactiveにならない
     if(i === 0) return false
@@ -122,8 +115,7 @@ function App() {
         <div className="secondContainer">
           <div className="secondContainerTitle">秒</div>
           <div className="secondContainerBody">
-
-            {html()} 
+            {seconHtml()} 
           </div>
         </div>
       </div>
