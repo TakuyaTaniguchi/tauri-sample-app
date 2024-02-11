@@ -5,6 +5,13 @@ import { useEffect } from 'react';
 
 import "./App.css";
 
+
+// reactの範囲外で扱う手段があってもいい
+if (typeof window !== 'undefined') { 
+
+}
+
+
 function App() {
   const [greetMsg, setGreetMsg] = useState("");
   const [name, setName] = useState("");
@@ -20,6 +27,26 @@ function App() {
   const [MinuteDot, setMinuteDot] = useState("");
   const [hourDot, setHourDot] = useState("");
 
+
+  // useEffect 
+  // https://ja.react.dev/reference/react/useEffect#my-effect-runs-twice-when-the-component-mounts
+
+  // useEffect(setup
+
+  useEffect(() => {
+
+
+
+    // この部分に初回の一回だけ実行される処理を記述する
+    // setSecondArrayに初期血を入れる
+    // setSecondArray(['あ','あ','あ','あ','あ','あ','あ','あ','あ','あ','あ','あ']);
+    // Clean-up 関数を返すことで、コンポーネントがアンマウントされたときに処理を実行することもできます
+    return () => {
+      // useeffectの中でreturnするとコンポーネントがアンマウントされたときに実行される
+      // つまりこれがクリーンアップ関数
+      console.log('Component unmounted');
+    };
+  }, []); // 空の依存配列を渡すことで初回の一回だけ実行される
 
 
   useEffect(() => {
@@ -60,6 +87,8 @@ function App() {
     setSecondDot(secondDot => secondDot +"s");
     
   }
+
+  const __tmp = mathSecond(date.second);
 
   function mathMinute(second:string ,minute: string) { 
     // 60分でリセット
