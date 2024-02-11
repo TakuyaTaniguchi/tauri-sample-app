@@ -21,7 +21,6 @@ async function funcsendNotification() {
     permissionGranted = permission === 'granted';
   }
   if (permissionGranted) {
-    console.log('Permission granted');
     sendNotification('Tauri is awesome!');
     sendNotification({ title: 'TAURI', body: 'Tauri is awesome!', sound: 'purr'});
   }
@@ -59,13 +58,13 @@ function App() {
   }, [message])
 
 
-  async function putmessage(text: string) {
-    console.log('putmessage',text);
-    funcsendNotification();
+  // async function putmessage(text: string) {
+  //   console.log('putmessage',text);
+  //   funcsendNotification();
 
-    // Learn more about Tauri commands at https://tauri.app/v1/guides/features/command
-    setMessage(text);
-  }
+  //   // Learn more about Tauri commands at https://tauri.app/v1/guides/features/command
+  //   setMessage(text);
+  // }
 
   useEffect(() => {
 
@@ -119,6 +118,11 @@ function App() {
     return { hour, minute, second }
   }
 
+  if(date.second === '0') {
+    // stateの変更を常に検知している
+    funcsendNotification(); // 通知を発火
+  }
+
 
   function mathSecond(second: string) {
     // 60秒でリセット
@@ -167,21 +171,26 @@ function App() {
   }
 
   function seconHtml() {
+    let prevSecond = 0; // 前回の秒数を保持する変数を追加
    return Array.from(new Array(60)).map((v,i) => {
     // 0でリセットしているのでactiveにならない
-    if(i === 0) return false
+    if (i === 0 && prevSecond === 59) { // 前回の秒数が 59 で現在の秒数が 0 の場合
+    }
+    if(i === 0) {
+      return false
+    }
       return <p className={'secondDots ' + (Number(secondArray[i]) === i ? 'active': '')} key={i}> </p>
     })
   }
 
    // スパイラルの座標を計算する関数
-   function calculateSpiralPosition(index) {
-    const radius = 5 * index; // ドットの間隔を調整
-    const angle = index * (Math.PI / 30); // 角度を計算
-    const x = radius * Math.cos(angle) + 100; // x座標を計算
-    const y = radius * Math.sin(angle) + 100; // y座標を計算
-    return { x, y };
-  }
+  //  function calculateSpiralPosition(index) {
+  //   const radius = 5 * index; // ドットの間隔を調整
+  //   const angle = index * (Math.PI / 30); // 角度を計算
+  //   const x = radius * Math.cos(angle) + 100; // x座標を計算
+  //   const y = radius * Math.sin(angle) + 100; // y座標を計算
+  //   return { x, y };
+  // }
 
   
   return (
