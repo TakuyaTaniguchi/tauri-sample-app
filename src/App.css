@@ -1,5 +1,9 @@
+@import url('https://fonts.cdnfonts.com/css/montserrat');
+
 body {
   height: 100vh;
+  background: linear-gradient(to right, #fc5c7d, #6a82fb); 
+  font-family: 'Montserrat', sans-serif;
 }
 
 #root {
@@ -19,10 +23,13 @@ body {
   height: 100%;
 }
 
+.time{
+  margin: 15px 0;
+}
+
 .secondContainer {
-  border: 10px solid #747bff;
   width: 300px;
-  margin-left: auto;
+  margin: 0 auto;
 }
 
 .secondContainerTitle{
@@ -39,12 +46,56 @@ body {
 }
 
 .secondDots {
-  width: 10px;
-  height: 10px;
-  background-color: gray;
+  width: 40px;
+  height: 40px;
+  background-color: rgba(255, 255, 255, 0.7); /* グラデーションの背景に対して見やすい色 */
   margin: 5px;
+  border-radius: 50%;
+  animation: dotAnimation 1s forwards; /* ドットのアニメーション */
+
 }
 
+@keyframes dotAnimation {
+  0% {
+    opacity: 0;
+    transform: scale(0);
+  }
+  100% {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+
+
 .secondDots.active {
-  background-color: red;
+  background-color: #ffbf00; /* アクティブなドットの色を変更 */
+  transform: scale(1.5);
+  animation: dotActiveAnimation 1s forwards; /* アクティブなドットのアニメーション */
+}
+
+@keyframes dotActiveAnimation {
+  0% {
+    opacity: 1;
+    transform: scale(1.5);
+  }
+  100% {
+    opacity: 0;
+    transform: scale(2);
+  }
+}
+
+
+.spiralContainer {
+  position: relative;
+  margin: 0 auto;
+  width: 200px; /* スパイラルの直径 */
+  height: 200px; /* スパイラルの直径 */
+}
+
+.dot {
+  width: 10px; /* ドットのサイズ */
+  height: 10px; /* ドットのサイズ */
+  background-color: #ffbf00; /* ドットの色 */
+  border-radius: 50%; /* 円形の形状 */
+  position: absolute; /* 絶対位置 */
 }

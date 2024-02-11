@@ -81,6 +81,7 @@ function App() {
     };
   }, []); // 空の依存配列を渡すことで初回の一回だけ実行される
 
+  const [dots, setDots] = useState([]);
 
   useEffect(() => {
     // new Date().getUTCMilliseconds() に関する情報
@@ -95,6 +96,16 @@ function App() {
       mathSecond(time.second);
       mathMinute(time.second,time.minute);
       mathHour(time.second,time.minute,time.hour);
+
+      // setDots(prevDots => {
+      //   const newDots = [...prevDots, time.second];
+      //   // ドットが60を超えたらリセット
+      //   if (newDots.length > 60) {
+      //     return newDots.slice(1);
+      //   }
+      //   return newDots;
+      // });
+
     },1000 - new Date().getUTCMilliseconds()); 
     return () => clearInterval(interval);
   },[date])
@@ -162,28 +173,49 @@ function App() {
       return <p className={'secondDots ' + (Number(secondArray[i]) === i ? 'active': '')} key={i}> </p>
     })
   }
+
+   // スパイラルの座標を計算する関数
+   function calculateSpiralPosition(index) {
+    const radius = 5 * index; // ドットの間隔を調整
+    const angle = index * (Math.PI / 30); // 角度を計算
+    const x = radius * Math.cos(angle) + 100; // x座標を計算
+    const y = radius * Math.sin(angle) + 100; // y座標を計算
+    return { x, y };
+  }
+
   
   return (
 
     <div className="container">
       <div>
-        <h3>時間</h3>
         <div>
-          <button onClick={(e)=>{
+          {/* <button onClick={(e)=>{
             e.preventDefault();
             putmessage(new Date().getHours().toLocaleString() + ':' + new Date().getMinutes().toLocaleString() + ':' + new Date().getSeconds().toLocaleString());
-          }}>Greet</button>
+          }}>Greet</button> */}
         </div>
-        <p>日本:{date.hour}:{date.minute}:{date.second}</p>
-        <p>{hourDot}</p>
+        <h1>Time App</h1>
+        <p className="time">{date.hour}:{date.minute}:{date.second}:UTC+09:00</p>
+        {/* <p>{hourDot}</p>
         <p>{MinuteDot}</p>
-        <p>{secondDot}</p>
+        <p>{secondDot}</p> */}
         <div className="secondContainer">
-          <div className="secondContainerTitle">秒</div>
           <div className="secondContainerBody">
             {seconHtml()} 
           </div>
         </div>
+        {/* <div className="spiralContainer">
+          {dots.map((dot, index) => {
+            const position = calculateSpiralPosition(index);
+            return (
+              <div
+                key={index}
+                className="dot"
+                style={{ left: position.x + 'px', top: position.y + 'px' }}
+              ></div>
+            );
+          })} */}
+        {/* </div> */}
       </div>
 
 
