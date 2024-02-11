@@ -1,7 +1,10 @@
 import { useState } from "react";
-import reactLogo from "./assets/react.svg";
 import { invoke } from "@tauri-apps/api/tauri";
 import { useEffect } from 'react';
+
+import { isPermissionGranted, requestPermission , sendNotification} from '@tauri-apps/api/notification';
+
+
 
 import "./App.css";
 
@@ -11,6 +14,18 @@ if (typeof window !== 'undefined') {
 
 }
 
+async function funcsendNotification() {
+  let permissionGranted = await isPermissionGranted();
+  if (!permissionGranted) {
+    const permission = await requestPermission();
+    permissionGranted = permission === 'granted';
+  }
+  if (permissionGranted) {
+    console.log('Permission granted');
+    sendNotification('Tauri is awesome!');
+    sendNotification({ title: 'TAURI', body: 'Tauri is awesome!', sound: 'purr'});
+  }
+}
 
 function App() {
   const [greetMsg, setGreetMsg] = useState("");
@@ -26,6 +41,7 @@ function App() {
 
   const [MinuteDot, setMinuteDot] = useState("");
   const [hourDot, setHourDot] = useState("");
+
 
 
   // useEffect 
@@ -45,6 +61,8 @@ function App() {
 
   async function putmessage(text: string) {
     console.log('putmessage',text);
+    funcsendNotification();
+
     // Learn more about Tauri commands at https://tauri.app/v1/guides/features/command
     setMessage(text);
   }
