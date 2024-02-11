@@ -33,8 +33,23 @@ function App() {
 
   // useEffect(setup
 
+  const [message, setMessage] = useState('');
   useEffect(() => {
+    console.log('Component mountedaaaa');
+    return () => {
+      console.log('Component unmounted');
+    }
+    // メッセージの値を検知してreactの範囲外で処理を行える
+  }, [message])
 
+
+  async function putmessage(text: string) {
+    console.log('putmessage',text);
+    // Learn more about Tauri commands at https://tauri.app/v1/guides/features/command
+    setMessage(text);
+  }
+
+  useEffect(() => {
 
 
     // この部分に初回の一回だけ実行される処理を記述する
@@ -64,7 +79,7 @@ function App() {
       mathHour(time.second,time.minute,time.hour);
     },1000 - new Date().getUTCMilliseconds()); 
     return () => clearInterval(interval);
-  })
+  },[date])
 
 
   function getTime() {
@@ -88,7 +103,6 @@ function App() {
     
   }
 
-  const __tmp = mathSecond(date.second);
 
   function mathMinute(second:string ,minute: string) { 
     // 60分でリセット
@@ -134,9 +148,14 @@ function App() {
   return (
 
     <div className="container">
-      <h1>Welcome to Tauri!</h1>
       <div>
         <h3>時間</h3>
+        <div>
+          <button onClick={(e)=>{
+            e.preventDefault();
+            putmessage(new Date().getHours().toLocaleString() + ':' + new Date().getMinutes().toLocaleString() + ':' + new Date().getSeconds().toLocaleString());
+          }}>Greet</button>
+        </div>
         <p>日本:{date.hour}:{date.minute}:{date.second}</p>
         <p>{hourDot}</p>
         <p>{MinuteDot}</p>
