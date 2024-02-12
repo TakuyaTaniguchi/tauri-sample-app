@@ -1,5 +1,4 @@
 import { useState } from "react";
-import { invoke } from "@tauri-apps/api/tauri";
 import { useEffect } from 'react';
 
 import { isPermissionGranted, requestPermission , sendNotification} from '@tauri-apps/api/notification';
@@ -10,9 +9,9 @@ import "./App.css";
 
 
 // reactの範囲外で扱う手段があってもいい
-if (typeof window !== 'undefined') { 
+// if (typeof window !== 'undefined') { 
 
-}
+// }
 
 async function funcsendNotification() {
   let permissionGranted = await isPermissionGranted();
@@ -27,19 +26,18 @@ async function funcsendNotification() {
 }
 
 function App() {
-  const [greetMsg, setGreetMsg] = useState("");
-  const [name, setName] = useState("");
+  // const [setGreetMsg] = useState("");
+  // const [name] = useState("");
   const [date, setDate] = useState({
     hour: new Date().getHours().toLocaleString(),
     minute: new Date().getMinutes().toLocaleString(),
     second: new Date().getSeconds().toLocaleString()
   });
-  const [secondDot, setSecondDot] = useState("");
+  // const [setSecondDot] = useState();
   const [secondArray, setSecondArray] = useState(['']);
-  const [secondItems, setSecondItems] = useState([Array(60).fill('')]);
 
-  const [MinuteDot, setMinuteDot] = useState("");
-  const [hourDot, setHourDot] = useState("");
+  // const [ setMinuteDot] = useState("");
+  // const [setHourDot] = useState("");
 
 
 
@@ -48,7 +46,7 @@ function App() {
 
   // useEffect(setup
 
-  const [message, setMessage] = useState('');
+  const [message] = useState('');
   useEffect(() => {
     console.log('Component mountedaaaa');
     return () => {
@@ -80,7 +78,7 @@ function App() {
     };
   }, []); // 空の依存配列を渡すことで初回の一回だけ実行される
 
-  const [dots, setDots] = useState([]);
+
 
   useEffect(() => {
     // new Date().getUTCMilliseconds() に関する情報
@@ -107,7 +105,7 @@ function App() {
 
     },1000 - new Date().getUTCMilliseconds()); 
     return () => clearInterval(interval);
-  },[date])
+  })
 
 
   function getTime() {
@@ -127,12 +125,12 @@ function App() {
   function mathSecond(second: string) {
     // 60秒でリセット
     if (Number(second) === 0) {
-      setSecondDot("");
+      // setSecondDot("");
       setSecondArray(['']);
       return
     } 
     setSecondArray(secondArray => [...secondArray, second]);
-    setSecondDot(secondDot => secondDot +"s");
+    // setSecondDot(secondDot => secondDot +"s");
     
   }
 
@@ -140,12 +138,12 @@ function App() {
   function mathMinute(second:string ,minute: string) { 
     // 60分でリセット
     if(Number(second) === 0 && Number(minute) === 0) {
-      setMinuteDot("");
+      // setMinuteDot("");
       return
     }
     if(Number(second) === 0 ) {
 
-      setMinuteDot(MinuteDot => MinuteDot +"m");
+      // setMinuteDot(MinuteDot => MinuteDot +"m");
       return
     }
 
@@ -154,32 +152,33 @@ function App() {
   function mathHour(second:string ,minute: string, hour: string) {
     // 1時間でリセット
     if(Number(second) === 0 && Number(minute) === 0 && Number(hour) === 0) {
-      setMinuteDot("");
+      // setMinuteDot("");
       return
     }
 
     if(Number(second) === 0 && Number(minute) === 0 ) {
-      setHourDot(hourDot => hourDot +"h");
+      // setHourDot(hourDot => hourDot +"h");
       return
     }
   }
 
 
-  async function greet() {
-    // Learn more about Tauri commands at https://tauri.app/v1/guides/features/command
-    setGreetMsg(await invoke("greet", { name }));
-  }
+  // async function greet() {
+  //   // Learn more about Tauri commands at https://tauri.app/v1/guides/features/command
+  //   setGreetMsg(await invoke("greet", { name }));
+  // }
 
   function seconHtml() {
-    let prevSecond = 0; // 前回の秒数を保持する変数を追加
-   return Array.from(new Array(60)).map((v,i) => {
+    // let prevSecond = 0; // 前回の秒数を保持する変数を追加
+   return Array.from(new Array(60)).map((_,index) => {
+    console.log('index',index);
     // 0でリセットしているのでactiveにならない
-    if (i === 0 && prevSecond === 59) { // 前回の秒数が 59 で現在の秒数が 0 の場合
-    }
-    if(i === 0) {
+    // if (i === 0 && prevSecond === 59) { // 前回の秒数が 59 で現在の秒数が 0 の場合
+    // }
+    if(index === 0) {
       return false
     }
-      return <p className={'secondDots ' + (Number(secondArray[i]) === i ? 'active': '')} key={i}> </p>
+      return <p className={'secondDots ' + (Number(secondArray[index]) === index ? 'active': '')} key={index}> </p>
     })
   }
 

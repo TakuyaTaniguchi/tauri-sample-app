@@ -27,3 +27,7 @@ pnpm install && pnpm tauri dev
 ## App
 https://github.com/TakuyaTaniguchi/tauri-sample-app/assets/29139356/56c46293-0b91-4104-a3b3-40f5d3f3524a
 
+## Install
+```
+pnpm tauri build
+```
